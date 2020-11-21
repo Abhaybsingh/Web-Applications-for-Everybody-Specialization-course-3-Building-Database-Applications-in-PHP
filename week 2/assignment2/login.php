@@ -45,6 +45,7 @@ if (isset($_POST['who']) && isset($_POST['pass'])) {
 <div class="container">
     <h1>Please Log In</h1>
     <?php
+    // thhis is to print the error messages in red colour and using htmlentities for avoiding injection of any bug
     if ($failure !== false) {
         echo('<p style="color: red;">' . htmlentities($failure) . "</p>\n");
     }

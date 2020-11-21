@@ -5,17 +5,26 @@ require_once "pdo.php";
 $failure = false;
 $success = false;
 
+// when logging in without permission
 if (!isset($_GET['name'])) {
     die("Name parameter missing");
-} elseif (isset($_POST['logout']) && $_POST['logout'] == 'Logout') {
+}
+// when logout button is pressed
+ elseif (isset($_POST['logout']) && $_POST['logout'] == 'Logout') {
     header('Location: index.php');
-} elseif (isset($_POST['make']) && isset($_POST['year'])
+}
+// when all data is entered
+ elseif (isset($_POST['make']) && isset($_POST['year'])
     && isset($_POST['mileage'])) {
+    // check if the year and mileage entred were numeric
     if (!is_numeric($_POST['year']) || !is_numeric($_POST['mileage'])) {
         $failure = 'Mileage and year must be numeric';
-    } elseif (strlen($_POST['make']) < 1 ) {
+    }
+    // check if make is entered
+     elseif (strlen($_POST['make']) < 1 ) {
         $failure = 'Make is required';
     } else {
+        // performimg insert statement for adding the values into the database
         $stmt = $pdo->prepare('INSERT INTO autos (make, year, mileage) VALUES ( :make, :year, :mileage)');
         $stmt->execute(array(
                 ':make' => $_POST['make'],
@@ -25,6 +34,7 @@ if (!isset($_GET['name'])) {
         $success = 'Record inserted';
     }
 }
+// getting the first column of the database
 $stmt = $pdo->query("SELECT make, year, mileage FROM autos");
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -62,6 +72,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <ul>
 
         <?php
+        // printing all rows of the database
         foreach ($rows as $row) {
             echo '<li>';
             echo htmlentities($row['make']) . ' ' . $row['year'] . ' / ' . $row['mileage'];
