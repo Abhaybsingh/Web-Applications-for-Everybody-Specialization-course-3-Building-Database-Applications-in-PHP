@@ -1,0 +1,134 @@
+-> within operator it is dynamic.  It is used to refer
+the data and functions of the object
+
+new is used to construct the operator
+
+stdClass is the class in whihc we can add data and function in run time
+
+
+We will build a request that goes into php create a database connection
+and goes into sql server  send sql commands back and forth then retrieves
+the data(record sets), the in web server it do something( create pjp file) then send
+the response 
+
+PDO - Portable Data Object
+
+to make a connection to database this command is used
+
+$pdo = new PDO('mysql:host=localhost;port=3306;
+            dbname=databasename','username','password');
+
+To make connection to the database we must know id, password and port on which 
+they are running.
+We can have multiple connection to a database.
+
+pdo->query  this is used to send strings of sql query directly to the database.
+
+$stmt -> fetch(PDO::FETCH_ASSOC)  this is used to fetch the result of the query
+from database.
+
+After the data is fetched formm the database php formats the data, then it sends
+the response to the user.
+
+errormode should be always start before continuing of any project otherwise 
+it won't print any error output.
+
+prepare statement looks for sql query syntax and other things to be correct.
+
+execute statement parses the statement and execute the sql query and it also
+execute the array with the place holder column name map to actual string we
+want. 
+It checks and replaces the actual data instead of place holder and runs the 
+query.
+
+
+
+SQL INJECTION
+To avoid the sql injection always do statement prepare and execute.
+ 
+
+HTTP cookies(browser concept)
+
+cookies are part of the http protocol. It is a samll data which is stored in 
+our browser, it is a key value pair it is almost like a php key value array
+
+
+At beginning there is nothing in the cookies a small data which is received 
+from response, it is stored in that cookies.
+
+It is send from web server side every time with response. there is limit like
+expiration date and size.
+
+cookies data is stored in $_COOKIE 
+
+
+Sessions(server concept)
+
+it is a samll data whihc is stored in server $_SESSION
+If any browser is unmarked then browser create a session, this session cookie 
+is used to reconnect the session.
+
+session_start() to create a session or establish a connection 
+session_destroy() to ends the session
+
+
+Redirect 
+
+when a request come in your php server ,it can send a secial response of 
+redirect but this response never gets to the dom then it again calls a request
+then it goes to the redirected response.
+
+GET request is called twice.
+
+GET redirect GET post then you get redirected then you do an another redirect
+
+HTTP loaction header
+
+it is a response header that your application send that says this is not
+the page you are looking for go o this url.
+
+header should be called before any output is printed 
+
+
+
+Post refressh redirect
+
+fill a form 
+do a post
+the data gets updated once
+then you sends a redirect 
+then it silently goes back to same page
+then the confirmation page is the result of get
+if we refresh 
+then get request is called after then
+
+
+flash messages(post redirect get refresh)
+
+post 
+post comes in we put the data in the session
+then imediately sends the redirect 
+then the browser does he another get request
+then pulls the data out of the session
+then it produces the html with the old guess and the message
+and then it sends the messgae to the browser 
+which parses th reaponse an dputs in rthe dom and you see it
+then if you ypres refresh
+it sends the get request in which thenpulls the same data out of the session
+produces the same html and then the response come back to you 
+
+
+
+
+For login logout we use session 
+
+
+
+CRUD 
+
+Refactoring - to split the function in the seoarate file
+
+we will place the raw user input into the database
+we will call he htmlentities when we are fetching the data from the database
+
+do not call htmlentities twice
